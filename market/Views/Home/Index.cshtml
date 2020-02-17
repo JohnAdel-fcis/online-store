@@ -1,0 +1,181 @@
+﻿@model IEnumerable<market.Models.Item>
+
+
+    <div style="background-color: rgba(0, 0, 0, 0.03);">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="2000">
+            <div class="carousel-inner d-flex">
+                <div class="carousel-item active">
+                    <img class="d-block w-50" src="~/Data/carousel2.jpg" style=" height: 300px;margin: auto" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-50" src="~/Data/carousel1.jpg" style=" height: 300px;margin: auto" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-50" src="~/Data/carousel3.jpg" style=" height: 300px;margin: auto" alt="Third slide">
+                </div>
+            </div>
+        </div>
+       
+    </div>
+<div class="text-center" style="margin: 20px">
+    <form method="post">
+        <input id="Text1" type="text" onfocus="this.value = ''; this.style.color='black';" onfocusout="this.value = 'Search'; this.style.color='rgb(201, 196, 195)';" class="form-control d-inline-block" name="SearchString" value="Search" style="color: rgb(201, 196, 195)" />
+
+        <div class="form-group d-none">
+            <input class=".d-none " value=@ViewBag.name type="text" name="name" />
+        </div>
+        <div class="form-group d-none">
+            <input class=".d-none " value=@ViewBag.id type="text" name="id" />
+        </div>
+        <input id="Submit1" type="submit" style="width: 100px" class="btn-info d-inline-block form-control" value="search" />
+    </form>
+    </div>
+
+
+
+
+@if (Model.Count() <= 12)
+{
+    <div class="d-flex flex-wrap" >
+        @foreach (var item in Model)
+        {
+            <div class="p-2 border cardSize "  >
+
+                @if (item.img != null)
+                {
+                    <img style="width: 100%; height: 300px;" class="zoom" src="data:image/*;base64,@(Convert.ToBase64String(item.img))">
+                }
+                else
+                {
+                    <img style="width:100%; height: 300px;" src="~/Data/DefaultIcon.png" />
+                }
+            <div class="card-body text-center">
+                <h5 class="card-title">@item.ItemName</h5>
+                <p class="card-text"> السعر: @item.Price جنيه </p>
+                <p class="card-text">العدد: @item.quantity كيلو</p>
+                @Html.ActionLink("للمزيد", "Index", "Order", new { itemId = item.ItemId,userId = ViewBag.userId }, new { @class = "btn btn-primary", @style = "width: 90%" })
+            </div>
+            </div>
+        }
+        @*
+            <img src="~/Data/pic1.jpg" class="d-block w-100" style="max-width: 300px">
+            <img src="~/Data/pic2.jpg" class="d-block w-100" style="max-width: 300px">
+            <img src="~/Data/pic3.jpg" class="d-block w-100" style="max-width: 300px">
+        *@
+    </div>
+}
+else
+{
+    int counter = 0;
+    int loop = 0;
+    var div = Model.Count() % 12;
+    int num = Model.Count() / 12;
+    if (div != 0)
+    {
+        num = num + 1;
+    }
+
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-bottom: 80px">
+        <ol class="carousel-indicators" style="bottom: -80px">
+            @for (int i = 0; i < num; i++)
+            {
+                if (i == 0)
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="active" style="filter: invert(200%)"></li>
+                }
+                else
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="@i" style="filter: invert(200%)"></li>
+                }
+            }
+        </ol>
+        <div class="carousel-inner">
+            @for (int i = 0; i < num; i++)
+            {
+                loop = counter;
+                if (i == 0)
+                {
+                    var plus = 0;
+                    <div class="carousel-item active">
+                        <div class="d-flex flex-wrap">
+                            @if (Model.Count() - counter < 12)
+                            {
+                                plus = Model.Count() - counter;
+                            }
+                            else
+                            {
+                                plus = 12;
+                            }
+                            @for (int x = loop; x < loop + plus; x++)
+                            {
+                                <div class="p-2 border cardSize" >
+
+                                    @if (Model.ToList()[x].img != null)
+                                    {
+                                        <img style="width: 100%; height: 300px" class="zoom"  src="data:image/*;base64,@(Convert.ToBase64String(Model.ToList()[x].img))">
+                                    }
+                                    else
+                                    {
+                                        <img style="width: 100%; height: 300px;"  src="~/Data/DefaultIcon.png" />
+                                    }
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">@Model.ToList()[x].ItemName</h5>
+                                        <p class="card-text"> السعر: @Model.ToList()[x].Price جنيه </p>
+                                        <p class="card-text">العدد: @Model.ToList()[x].quantity كيلو</p>
+                                        @Html.ActionLink("للمزيد","Index","Order",new{itemId=@Model.ToList()[x].ItemId,userId=ViewBag.userId},new {@class="btn btn-primary",@style="width: 90%"})
+                                        
+                                    </div>
+                                </div>
+                                counter = counter + 1;
+                            }
+
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    var plus = 0;
+                    <div class="carousel-item">
+                        <div class="d-flex flex-wrap">
+
+                            @if (Model.Count() - counter < 12)
+                            {
+                                plus = Model.Count() - counter;
+                            }
+                            else
+                            {
+                                plus = 12;
+                            }
+                            @for (int x = loop; x < loop + plus; x++)
+                            {
+                                <div class="p-2 border cardSize" >
+
+                                    @if (Model.ToList()[x].img != null)
+                                    {
+                                        <img style="width: 100% ; height: 300px;" class="zoom"  src="data:image/*;base64,@(Convert.ToBase64String(Model.ToList()[x].img))">
+                                    }
+                                    else
+                                    {
+                                        <img style="width: 100%; height: 300px;" src="~/Data/DefaultIcon.png" />
+                                    }
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">@Model.ToList()[x].ItemName</h5>
+                                    <p class="card-text"> السعر: @Model.ToList()[x].Price جنيه </p>
+                                    <p class="card-text">العدد: @Model.ToList()[x].quantity كيلو</p>
+                                    @Html.ActionLink("للمزيد", "Index", "Order", new { itemId = @Model.ToList()[x].ItemId}, new { @class = "btn btn-primary", @style = "width: 90%" })
+                                </div>
+                                </div>
+                                counter = counter + 1;
+                            }
+
+
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+       
+    </div>
+}

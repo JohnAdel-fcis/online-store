@@ -1,0 +1,68 @@
+﻿@using System.Diagnostics
+@model IEnumerable<market.Models.order>
+@{
+    ViewBag.Title = "OrderList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{ int? counter = 0;}
+@foreach (var orders in Model)
+{
+    
+    <div class="orderDetails">
+
+        <h4 style="display: inline-block">Order id : <span style="color: red">@orders.order_id</span></h4>
+        <h4 style="display: inline-block">user id : <span style="color: red">@orders.Id</span> </h4>
+        <h4 style="display: inline-block">user name :<span style="color: red">@orders.User.Name</span> </h4>
+        <h4 style="display: inline-block">user phone : <span style="color: red">@orders.User.Phone</span> </h4>
+        <h4 style="display: inline-block">user address : <span style="color: red">@orders.User.Address</span></h4>
+    </div>
+    <table class="table table-hover" id="tableJohn">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Item id</th>
+                <th scope="col">Item name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total price</th>
+            </tr>
+        </thead>
+        @{ var x = 0;}
+        <tbody id="tableJohn">
+            @foreach (var item in orders.orderItems)
+            {
+                x = x + 1;
+                var totalPrice = item.Item.Price * item.Item.quantity;
+                counter = counter + totalPrice;
+                <tr>
+                    <th scope="row">@x</th>
+                    <th>@item.ItemId</th>
+                    <th>@item.Item.ItemName</th>
+                    <th>@item.Item.Price</th>
+                    <th>@item.Item.quantity</th>
+                    <th>@totalPrice</th>
+                </tr>
+
+            }
+        </tbody>
+        <tfoot class="alert-dark">
+            <tr>
+                <td>
+                    Final price  :
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td colspan="5">
+                    <b>
+                        @counter
+                    </b>
+                </td>
+        </tr>
+        </tfoot>
+    </table>
+    <br />
+    <br />
+}
+

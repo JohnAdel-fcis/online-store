@@ -1,0 +1,72 @@
+﻿@using System.Web.UI.HtmlControls
+@model market.Models.Item
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2> hello @ViewBag.customer</h2>
+
+@Html.HiddenFor(model => model.ItemId);
+<form method="post" enctype="multipart/form-data">
+    @if (ViewBag.itemError != null)
+    {
+        <div class=" alert alert-danger"> @ViewBag.itemError </div>
+    }
+
+    <div class="form-group">
+        <label>Name</label>
+        @Html.EditorFor(item => item.ItemName, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+
+    <div class="form-group">
+        <label>Price</label>
+        @Html.EditorFor(item => item.Price, new { htmlAttributes = new { @class = "form-control" } })
+
+    </div>
+
+    <div class="form-group">
+        <label>quantity</label>
+        @Html.EditorFor(item => item.quantity, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    <div class="form-group">
+        @if (Model.img != null)
+        {
+            <img style="max-width:200px; " src="data:image/*;base64,@(Convert.ToBase64String(Model.img))">
+        }
+        else
+        {
+            <img style="max-width:200px;" src="~/Data/DefaultIcon.png" />
+        }
+
+        <div>
+            <b>do you want change a image !....</b>
+            <div id="button" onclick="myFunction()" class="btn btn-info">Change</div>
+        </div>
+        <div id="fileUpload">
+            <input class="form-control-file" type="file" name="file" />
+
+        </div>
+
+        
+
+    </div>
+
+
+    <button type="submit" class="btn btn-primary" style="width: 280px">Update </button>
+</form>
+<script>
+    document.getElementById("fileUpload").style.display = "none";
+    var button = document.getElementById("button");
+    function myFunction() {
+        var x = document.getElementById('fileUpload');
+        if (x.style.display === 'none') {
+            button.textContent = "Hide";
+            x.style.display = 'block';
+        } else {
+            button.textContent = "Change";
+            x.style.display = 'none';
+        }
+    }
+</script>

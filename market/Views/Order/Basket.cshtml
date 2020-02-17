@@ -1,0 +1,71 @@
+﻿@using market.Models.help
+
+@{
+    ViewBag.Title = "Basket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Basket</h2>
+@if (GlobalVariables.counter == 0)
+{
+    <h3> Basket is empty !! </h3>
+}
+else
+{
+<table class="table table-hover" id="tableJohn">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Image</th>
+            <th scope="col">Total price</th>
+        </tr>
+    </thead>
+    <tbody id="tableJohn">
+    @{ var x = 0;}
+    @foreach (var VARIABLE in GlobalVariables.MyBasket.BasketIElements)
+    {
+        x++;
+        var totalPrice = VARIABLE.Quantity * VARIABLE.Item.Price;
+        <tr>
+            <th scope="row">@x</th>
+            <td>@VARIABLE.Item.ItemName</td>
+            <td>@VARIABLE.Item.Price</td>
+            <td>@VARIABLE.Quantity</td>
+            @if (VARIABLE.Item.img != null)
+            {
+                <td><img style="width: 50px; height: 50px;"alt="item" src="data:image/*;base64,@(Convert.ToBase64String(VARIABLE.Item.img))"></td>
+            }
+            else
+            {
+                <td>
+                    <img style="width: 100px; height: 100px;" src="~/Data/DefaultIcon.png" alt="item"/>
+                </td>
+            }
+
+            <td>@totalPrice</td>
+        </tr>
+    }
+    </tbody>
+    <tfoot class="alert-dark">
+        <tr>
+            <td>
+                Final price  :
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td colspan="5">
+                <b>
+                    @GlobalVariables.MyBasket.Total()
+                </b>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+    @Html.ActionLink("Confirm order", "ConfirmOrder", "Order", null, new {@class = "btn btn-info "})
+}
+
+

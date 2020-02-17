@@ -1,0 +1,48 @@
+﻿body {
+    
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+.cardSize {
+    width: 30%;
+    margin: 1%;
+}
+#tableJohn {
+    
+    font-size: 20px;
+}
+table tfoot {
+    color: red;
+}
+.zoom {
+    border-radius: 10%;
+    -moz-transition: all .6s;
+    -o-transition: all .6s;
+    -webkit-transition: all .6s;
+    transition: all .6s;
+}
+    .zoom:hover {
+        background-color: red;
+        -ms-transform: scale(1.1); /* IE 9 */
+        -webkit-transform: scale(1.1); /* Safari 3-8 */
+        transform: scale(1.05);
+        border-radius: 30%;
+    }
+    .orderDetails h4 {
+        display: inline-block;
+    }
+    .orderDetails span {
+        color: red;
+    }

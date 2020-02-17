@@ -1,0 +1,47 @@
+﻿@model market.Controllers.AdminController.myViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1> Hello @Model.adminUser.Name</h1>
+<a class="btn btn-info" style="margin-left: 40%; margin-bottom: 2%" href='@Url.Action("AddItem", "Admin",Model.adminUser)'>
+    Add Item
+</a>
+    <table class="table table-hover table-dark table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>img</th>
+            <th>Options</th>
+        </tr>
+        @foreach (var item in Model.AllItems)
+        {
+    <tr>
+        <td>@item.ItemName</td>
+        <td>@item.quantity</td>
+        <td>@item.Price lE</td>
+        <td>
+            @if (item.img != null)
+            {
+                <img style="max-width:50px; " src="data:image/*;base64,@(Convert.ToBase64String(item.img))">
+            }
+            else
+            {
+                <img style="max-width:50px;" src="~/Data/DefaultIcon.png" />
+            }
+        </td>
+        <th>
+            <a class="btn btn-info" href='@Url.Action("Edit", "Admin",new {id =item.ItemId ,userId = ViewBag.id})'>
+                update
+            </a>
+            <a class="btn btn-danger" href='@Url.Action("DeleteItem", "Admin",new {id =item.ItemId ,userId = ViewBag.id})'>
+                delete
+            </a>
+        </th>
+    </tr>
+
+        }
+    </table>
+

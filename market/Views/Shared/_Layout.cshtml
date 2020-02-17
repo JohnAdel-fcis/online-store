@@ -1,0 +1,135 @@
+﻿@using market.Models.help
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Scripts/simple-sidebar.css" rel="stylesheet">
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+</head>
+<body style="padding: 0" >
+    <div class="d-flex toggled" id="wrapper" style="background-color: white" >
+
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <b> <div class="sidebar-heading"><span style="color: red">C</span>offe </div></b>
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action bg-light">Home</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">sign in</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">sign up</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">basket</a>
+              
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom " >
+                <button style="border: none; background-color: inherit;font-size: x-large" id="menu-toggle"><span style="color: red">C</span>offe</button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+               
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="~/Home/Index">Home <span class="sr-only">(current)</span></a>
+                    </li>
+
+
+                    @*
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </li>
+                    *@
+                    @if (GlobalVariables.LoginUser != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Login/LogOut">Logout</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Login/RealLogin">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Login/Index">Sign up</a>
+                        </li>
+                    }
+
+
+                    @if (GlobalVariables.counter != 0)
+                    {
+                        <li class="nav-item">
+                            <b>
+                                <a class="nav-link" href="~/Order/Basket">Basket (<span style="color: red">@GlobalVariables.counter</span>)</a>
+                            </b>
+                            @*  @Html.ActionLink("basket--" + GlobalVariables.counter + "--", "Basket", "Order", null, new {@class = "nav-link"})*@
+                        </li>
+                    }
+                    @if (GlobalVariables.admin == true)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link alert-danger" href="~/Admin/OrderList">Orders</a>
+                        </li>
+                    }
+
+                </ul>
+                
+                @if (GlobalVariables.LoginUser == null)
+                {
+                    @Html.ActionLink("login","RealLogin","Login",null,new{@class = "nav-link"})
+                }
+                else
+                {
+                    
+                    <a class="nav-link disabled" href="#" >@GlobalVariables.LoginUser.Name</a>
+                }
+                <img src="~/Data/DefaultIcon.png" style="width: 30px" />
+            </div>
+            </nav>
+
+            <div style="margin-left: 10px;margin-right: 10px" >
+                <div style="min-height: 500px;">
+                    @RenderBody()
+
+                </div>
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                </footer>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+
+
+    
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+</body>
+</html>
